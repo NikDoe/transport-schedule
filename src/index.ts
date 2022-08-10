@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import express, { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+import sequelize from './db';
 
 const app = express();
 const PORT: string | number = process.env.PORT || 9001;
@@ -25,6 +26,19 @@ app.post('/auth/login', (req: Request, res: Response) => {
 	});
 });
 
-app.listen(PORT, () => {
-	console.log(`listening on port ${PORT}`);
-});
+const start = async () => {
+	try {
+		await sequelize.authenticate();
+		await sequelize.sync();
+
+		app.listen(PORT, () => {
+			console.log(`listening on port ${PORT}`);
+		});
+	} catch (e) {
+		console.log(e);
+	}
+};
+
+start();
+
+console.log(2);
