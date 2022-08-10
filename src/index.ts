@@ -1,8 +1,9 @@
+import 'dotenv/config';
 import express, { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
 const app = express();
-const PORT: number = 9001;
+const PORT: string | number = process.env.PORT || 9001;
 
 app.use(express.json());
 
