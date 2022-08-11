@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "clean": "rimraf ./build/",
-    "start:build": "tsc -w",
+    "build": "rimraf ./build/ && tsc",
+    "start:watch": "tsc -w",
     "start:run": "nodemon build/index.js",
     "start": "concurrently npm:start:*"
   },
