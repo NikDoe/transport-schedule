@@ -2,6 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import sequelize from './db';
 import router from './router/router';
+import { User, Post } from './models/models';
 
 const app = express();
 const PORT: string | number = process.env.PORT || 9001;
@@ -12,7 +13,8 @@ app.use('/api', router);
 const start = async () => {
 	try {
 		await sequelize.authenticate();
-		await sequelize.sync();
+		await User.sync({ force: true });
+		await Post.sync({ force: true });
 
 		app.listen(PORT, () => {
 			console.log(`сервер запущен на порту ${PORT}`);
@@ -23,3 +25,5 @@ const start = async () => {
 };
 
 start();
+
+console.log(1);
