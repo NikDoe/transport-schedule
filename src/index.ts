@@ -1,22 +1,23 @@
 import 'dotenv/config';
 import express from 'express';
-import sequelize from './db';
 import router from './router/router';
-import { User, Post } from './models/models';
+import { AppDataSource } from './db';
 
 const app = express();
-const PORT: string | number = process.env.PORT || 9001;
+const PORT = process.env.PORT || 9001;
 
 app.use(express.json());
 app.use('/api', router);
 
 const start = async () => {
 	try {
-		await sequelize.authenticate();
-		await User.sync({ force: true });
-		await Post.sync({ force: true });
+		await AppDataSource.initialize()
+			.then(() => {
+				console.log('база данных подключена');
+			})
+			.catch(error => console.log(error));
 
-		app.listen(PORT, () => {
+		await app.listen(PORT, () => {
 			console.log(`сервер запущен на порту ${PORT}`);
 		});
 	} catch (e) {
