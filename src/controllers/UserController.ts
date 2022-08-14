@@ -10,7 +10,8 @@ class UserController {
 	}
 
 	async checkAuth(req: Request, res: Response) {
-		res.send('авторизован ли пользователь');
+		const { id } = req.query;
+		res.json(id);
 	}
 }
 
