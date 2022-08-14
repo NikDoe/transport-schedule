@@ -2,8 +2,16 @@ import { Request, Response } from 'express';
 
 class UserController {
 	async registration(req: Request, res: Response) {
-		res.send('контроллеры работают');
+		res.send('регистрация');
+	}
+
+	async login(req: Request, res: Response) {
+		res.send('логин');
+	}
+
+	async checkAuth(req: Request, res: Response) {
+		res.send('авторизован ли пользователь');
 	}
 }
 
-export const userController = new UserController();
+export default new UserController();
