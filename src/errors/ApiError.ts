@@ -1,6 +1,9 @@
-class ApiError extends Error {
+export class ApiError extends Error {
 	constructor(public status: number, public message: string) {
 		super();
+
+		//if target in tsconfig is es5
+		Object.setPrototypeOf(this, ApiError.prototype);
 	}
 
 	static forbidden(message: string): ApiError {
