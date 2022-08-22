@@ -5,14 +5,8 @@ import { ApiError } from '../errors/ApiError';
 
 class PostController {
 	async createPost(req: Request, res: Response, next: NextFunction) {
-		const post = new Post();
 		const { title, text, tags, views, imgUrl, userId } = req.body;
-		post.title = title;
-		post.text = text;
-		post.tags = tags;
-		post.views = views;
-		post.imgUrl = imgUrl;
-		post.user = userId;
+		const post = Post.create({ title, text, tags, views, imgUrl, user: userId });
 
 		const postRepo = AppDataSource.getRepository(Post);
 		const existPost = await postRepo.findOne({ where: { text } });
