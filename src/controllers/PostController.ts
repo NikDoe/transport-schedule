@@ -3,12 +3,13 @@ import { Post } from '../models';
 import { AppDataSource } from '../db';
 import { ApiError } from '../errors/ApiError';
 
+const postRepo = AppDataSource.getRepository(Post);
+
 class PostController {
 	async createPost(req: Request, res: Response, next: NextFunction) {
 		const { title, text, tags, views, imgUrl, userId } = req.body;
 		const post = Post.create({ title, text, tags, views, imgUrl, user: userId });
 
-		const postRepo = AppDataSource.getRepository(Post);
 		const existPost = await postRepo.findOne({ where: { text } });
 
 		if (existPost) {
@@ -19,11 +20,14 @@ class PostController {
 	}
 
 	async getAllPosts(req: Request, res: Response) {
-		res.send('все посты получены');
+		const posts = await postRepo.find();
+		res.json(posts);
 	}
 
 	async getOnePost(req: Request, res: Response) {
-		res.send('получен конкретный пост');
+		const id: string = req.params.id;
+		const post = await postRepo.findOne({ where: { id: parseInt(id) } });
+		res.json(post);
 	}
 }
 
