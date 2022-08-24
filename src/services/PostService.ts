@@ -1,7 +1,5 @@
 import { Post } from '../models';
-import { AppDataSource } from '../db';
-
-const postRepo = AppDataSource.getRepository(Post);
+import { postRepo } from '../utils/utils';
 
 class PostService {
 	async createPost(post: Post, text: string) {

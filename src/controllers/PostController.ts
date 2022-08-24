@@ -1,10 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import { Post } from '../models';
-import { AppDataSource } from '../db';
 import { ApiError } from '../errors/ApiError';
 import PostService from '../services/PostService';
-
-const postRepo = AppDataSource.getRepository(Post);
+import { postRepo } from '../utils/utils';
 
 class PostController {
 	async createPost(req: Request, res: Response, next: NextFunction) {
