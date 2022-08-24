@@ -19,6 +19,16 @@ class UserService {
 		await userRepo.save(newUser);
 		return generateJWT(newUser.id, newUser.email, newUser.role);
 	}
+
+	async login(email: string, password: string) {
+		const existUser = await userRepo.findOne({ where: { email } });
+		if (!existUser) throw new Error('пользователя с таким email не существует');
+
+		let comparePassword = bcrypt.compareSync(password, existUser.password);
+		if (!comparePassword) throw new Error('неправильный пароль');
+
+		return generateJWT(existUser.id, existUser.email, existUser.role);
+	}
 }
 
 export default new UserService();

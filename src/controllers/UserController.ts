@@ -8,16 +8,19 @@ class UserController {
 			const token = await UserService.registration(req.body, req.body.email);
 			res.json({ token });
 		} catch (e) {
-			if (e instanceof Error) {
-				return next(ApiError.badRequest(e.message));
-			} else {
-				console.log('непредвиденная ошибка', e);
-			}
+			if (e instanceof Error) return next(ApiError.badRequest(e.message));
+			else console.log('непредвиденная ошибка', e);
 		}
 	}
 
-	async login(req: Request, res: Response) {
-		res.send('логин');
+	async login(req: Request, res: Response, next: NextFunction) {
+		try {
+			const token = await UserService.login(req.body.email, req.body.password);
+			res.json({ token });
+		} catch (e) {
+			if (e instanceof Error) return next(ApiError.badRequest(e.message));
+			else console.log('непредвиденная ошибка', e);
+		}
 	}
 
 	async checkAuth(req: Request, res: Response, next: NextFunction) {

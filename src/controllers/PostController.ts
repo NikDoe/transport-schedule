@@ -9,11 +9,8 @@ class PostController {
 			const post = await PostService.createPost(req.body, req.body.text);
 			return res.json(post);
 		} catch (e) {
-			if (e instanceof Error) {
-				return next(ApiError.badRequest(e.message));
-			} else {
-				console.log('непредвиденная ошибка', e);
-			}
+			if (e instanceof Error) return next(ApiError.badRequest(e.message));
+			else console.log('непредвиденная ошибка', e);
 		}
 	}
 
