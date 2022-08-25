@@ -3,7 +3,7 @@ import express from 'express';
 import router from './router/appRouter';
 import cors from 'cors';
 import { AppDataSource } from './db';
-import errorHandleMiddleware from './middleware/ErrorHandle';
+import { errorHandleMiddleware } from './middleware';
 
 const app = express();
 const PORT = process.env.PORT || 9001;

@@ -1,7 +1,7 @@
 import { ApiError } from '../errors/ApiError';
 import { NextFunction, Request, Response } from 'express';
 
-export default function (
+export function errorHandleMiddleware(
 	error: ApiError,
 	req: Request,
 	res: Response,

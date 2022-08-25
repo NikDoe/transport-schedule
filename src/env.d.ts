@@ -9,3 +9,9 @@ declare namespace NodeJS {
 		SECRET_KEY: string;
 	}
 }
+
+declare namespace Express {
+	interface Request {
+		user: string | JwtPayload;
+	}
+}

@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { ApiError } from '../errors/ApiError';
 import UserService from '../services/UserService';
+import { generateJWT } from '../utils/utils';
 
 class UserController {
 	async registration(req: Request, res: Response, next: NextFunction) {
@@ -23,12 +24,9 @@ class UserController {
 		}
 	}
 
-	async checkAuth(req: Request, res: Response, next: NextFunction) {
-		const { id } = req.query;
-		if (!id) {
-			return next(ApiError.badRequest('не задан id'));
-		}
-		res.json(id);
+	async checkAuth(req: Request, res: Response) {
+		const token = generateJWT(req.user.id, req.user.email, req.user.role);
+		res.json({ token });
 	}
 }
 
